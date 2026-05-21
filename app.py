@@ -39,7 +39,7 @@ def set_background(png_file):
     else:
         st.warning("Prześlij plik 'background.jpg' do repozytorium, aby zobaczyć tło.")
 
-set_background('background.jpg')
+set_background('background2.png')
 
 # 3. ZAAWANSOWANY CSS (Glassmorphism & Naprawa Zakładek)
 st.markdown("""
