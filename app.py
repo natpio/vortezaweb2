@@ -10,13 +10,22 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# 2. ZAAWANSOWANY CSS (Modularne Fundamenty & Efekt WOW)
+# 2. ZAAWANSOWANY CSS (Modularne Fundamenty & Styl z Załącznika Image_8.png)
 st.markdown("""
     <style>
-    /* Reset i tło globalne */
+    /* Reset i tło globalne - STYL IMAGE_8.PNG */
     .stApp {
         background-color: #f4f7f6;
-        font-family: 'Inter', 'Segoe UI', sans-serif;
+        /* Kompleksowe tło: Marmurowy gradient przechodzący w grafitową sieć połączeń */
+        background-image: 
+            linear-gradient(135deg, rgba(255,255,255,0.7) 0%, rgba(224,229,236,0.5) 100%),
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%'%3E%3Cdefs%3E%3Cpattern id='pattern' width='200' height='200' patternUnits='userSpaceOnUse'%3E%3Cpath d='M100 0 A100 100 0 0 1 200 100 L200 200 L0 200 A100 100 0 0 1 100 0 Z' fill='%23eceff3' fill-opacity='0.2'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%' height='100%' fill='url(%23pattern)'/%3E%3C/svg%3E"),
+            radial-gradient(circle at 75% 25%, #2c3e50, #1a1a2e), /* Głębia grafitowa z prawej strony */
+            radial-gradient(circle at 25% 75%, #ffffff, #eef2f3); /* Marmur z lewej strony */
+        background-blend-mode: overlay, normal, normal, normal;
+        background-attachment: fixed;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #0b213f; /* Ciemnogranatowy tekst jak w Vortezie */
     }
     
     /* Ukrycie elementów Streamlit dla czystego wyglądu */
@@ -24,16 +33,16 @@ st.markdown("""
     header {visibility: hidden;}
     footer {visibility: hidden;}
     
-    /* Główna sekcja Hero */
+    /* Sekcja Hero - dodanie złotej ramki w stylu plakietki */
     .hero-box {
-        background: linear-gradient(135deg, #ffffff 0%, #eef2f3 100%);
+        background-color: white;
         border-radius: 20px;
         padding: 6rem 3rem;
         text-align: center;
         box-shadow: 0 20px 40px rgba(0,0,0,0.04);
         margin-top: 2rem;
         margin-bottom: 4rem;
-        border: 1px solid rgba(255,255,255,0.5);
+        border: 2px solid #bda886; /* Złota ramka jak w plakietce */
     }
     .hero-title {
         color: #0b213f;
@@ -44,7 +53,7 @@ st.markdown("""
         line-height: 1.1;
     }
     .hero-title span {
-        color: #16a085; /* Zielony akcent technologiczny */
+        color: #bda886; /* Złoty akcent technologiczny zamiast zielonego */
     }
     .hero-subtitle {
         color: #5a6a7e;
@@ -63,7 +72,7 @@ st.markdown("""
         height: 100%;
         box-shadow: 0 10px 30px rgba(0,0,0,0.03);
         transition: transform 0.3s ease, box-shadow 0.3s ease;
-        border-top: 4px solid #16a085;
+        border-top: 4px solid #bda886; /* Złota ramka */
     }
     .module-card:hover {
         transform: translateY(-10px);
@@ -85,16 +94,114 @@ st.markdown("""
         line-height: 1.6;
     }
     
-    /* Nagłówki sekcji */
+    /* Nagłówki sekcji - Styl Image_8.png */
     .section-header {
         text-align: center;
         color: #0b213f;
         font-size: 2.5rem;
         font-weight: 800;
         margin: 4rem 0 2rem 0;
+        text-transform: uppercase;
+        letter-spacing: 1px;
     }
     
-    /* Przyciski */
+    /* Stylizacja Osi Czasu Trusted Sections (Wzorowane na Image_8.png) */
+    .trusted-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 4rem 0;
+        position: relative;
+    }
+    .timeline-line {
+        position: absolute;
+        width: 80%;
+        height: 2px;
+        background-color: #0b213f; /* Linia główna */
+        top: 50%;
+        left: 10%;
+        transform: translateY(-50%);
+        z-index: 1;
+    }
+    .trust-logo {
+        width: 120px;
+        height: 120px;
+        background-color: rgba(255,255,255,0.8);
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 2px solid rgba(11,33,63,0.1);
+        position: relative;
+        z-index: 2;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        margin: 0 1rem;
+    }
+    .trust-logo.active-node::after {
+        content: '';
+        position: absolute;
+        width: 15px;
+        height: 15px;
+        background-color: #bda886; /* Złota kropka węzła */
+        border-radius: 50%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: 0 0 10px rgba(189,168,134,0.7);
+    }
+    .trust-text {
+        text-align: center;
+        color: #0b213f;
+        font-weight: bold;
+        margin-top: 1rem;
+        font-size: 0.9rem;
+    }
+    
+    /* Styl Plakietki Vorteza (Identynczne z Image_8.png) */
+    .plaque-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 300px;
+        height: 150px;
+        margin-left: 1rem;
+        position: relative;
+        z-index: 2;
+    }
+    .plaque-frame {
+        border-radius: 5px;
+        border: 4px solid #bda886; /* Złota ramka plakietki */
+        background: linear-gradient(135deg, rgba(255,255,255,0.7) 0%, rgba(224,229,236,0.5) 100%);
+        padding: 1.5rem;
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .plaque-header {
+        position: absolute;
+        top: 10px;
+        left: 15px;
+        color: #5a6a7e;
+        font-size: 0.85rem;
+        text-transform: none;
+    }
+    .plaque-body {
+        color: #0b213f;
+        font-size: 1.4rem;
+        font-weight: bold;
+        margin-top: 1rem;
+    }
+    .plaque-v-logo {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 2.5rem;
+    }
+    
+    /* Przyciski - Złoty Kolor */
     .btn-primary {
         background-color: #0b213f;
         color: #ffffff !important;
@@ -108,9 +215,17 @@ st.markdown("""
         box-shadow: 0 4px 15px rgba(11, 33, 63, 0.2);
     }
     .btn-primary:hover {
-        background-color: #16a085;
-        box-shadow: 0 6px 20px rgba(22, 160, 133, 0.3);
+        background-color: #bda886; /* Złoty akcent technologiczny */
+        box-shadow: 0 6px 20px rgba(189,168,134,0.3);
         transform: translateY(-2px);
+    }
+    
+    /* Ukrycie paska zakładek Streamlit */
+    div[data-baseweb="tabs"] {
+        background-color: rgba(255,255,255,0.5);
+        border-radius: 10px;
+        padding: 5px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.03);
     }
     </style>
 """, unsafe_allow_html=True)
@@ -172,8 +287,53 @@ with col3:
         </div>
     """, unsafe_allow_html=True)
 
+# 5. NOWA SEKCJA: ZAUFALI MI NAJLEPSI (Styl Image_8.png)
+st.markdown("<h2 class='section-header'>Zaufali Mi Najlepsi</h2>", unsafe_allow_html=True)
 
-# 5. PORTFOLIO BRANŻOWE (Interaktywne Zakładki)
+st.markdown("""
+    <div class="trusted-container">
+        <div class="timeline-line"></div>
+        
+        <div>
+            <div class="trust-logo active-node">
+                <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 100 100"><path fill="%230b213f" d="M10 20 L20 10 L80 10 L90 20 L90 80 L80 90 L20 90 L10 80 ZM30 40 A10 10 0 0 1 70 40 L70 60 A10 10 0 0 1 30 60 Z"/><text x="25" y="105" font-size="12" fill="%230b213f" font-weight="bold">Uniwersytet Szczeciński</text></svg>
+            </div>
+            <div class="trust-text">Uniwersytet Szczeciński</div>
+        </div>
+        
+        <div>
+            <div class="trust-logo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" stroke="%230b213f" stroke-width="2" fill="none"/><path d="M50 30 Q70 50 50 70 Q30 50 50 30 Z" fill="%230b213f"/><text x="35" y="105" font-size="12" fill="%230b213f" font-weight="bold">Eneris Surowce</text></svg>
+            </div>
+            <div class="trust-text">Eneris Surowce</div>
+        </div>
+        
+        <div>
+            <div class="trust-logo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 100 100"><text x="15" y="60" font-size="30" fill="%230b213f" font-weight="bold">TPV</text><text x="30" y="80" font-size="12" fill="%230b213f">Displays</text></svg>
+            </div>
+            <div class="trust-text">TPV Displays</div>
+        </div>
+        
+        <div>
+            <div class="trust-logo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 100 100"><text x="15" y="60" font-size="30" fill="%230b213f" font-weight="bold">SQM</text><text x="10" y="80" font-size="12" fill="%230b213f">Multimedia Solutions</text></svg>
+            </div>
+            <div class="trust-text">SQM Multimedia Solutions</div>
+        </div>
+        
+        <div class="plaque-wrapper">
+            <div class="plaque-frame">
+                <div class="plaque-header">Autorski Projekt:</div>
+                <div class="plaque-body">Vorteza Systems</div>
+                <div class="plaque-v-logo">🧊</div> </div>
+        </div>
+        
+    </div>
+""", unsafe_allow_html=True)
+
+
+# 6. PORTFOLIO BRANŻOWE (Interaktywne Zakładki)
 st.markdown("<h2 class='section-header'>Zrealizowane Ekosystemy</h2>", unsafe_allow_html=True)
 
 tab1, tab2, tab3 = st.tabs(["🚛 Logistyka & Transport", "⚖️ Usługi Prawne", "⚕️ Medycyna Pracy"])
@@ -192,13 +352,12 @@ with tab1:
         
     with col_b:
         # Interaktywny element - Globus Plotly (pokazuje zasięg i skille programistyczne)
-        # Niewidoczne wplecenie: współrzędne odpowiadają trasom i punktom (Szczecin, Lisbona, Monachium, Midwest US)
         fig = go.Figure(data=go.Scattergeo(
             lon = [14.55, -9.13, 11.58, -93.60], 
             lat = [53.42, 38.72, 48.13, 41.60],
             text = ['Baza Operacyjna', 'Węzeł Południowy', 'Centrum Przeładunkowe', 'Trasa Transkontynentalna'],
             mode = 'markers',
-            marker = dict(size=12, color='#16a085', line=dict(width=2, color='white'))
+            marker = dict(size=12, color='#bda886', line=dict(width=2, color='white'))
         ))
         fig.update_layout(
             geo = dict(
@@ -233,12 +392,12 @@ with tab3:
     * Szybkie wystawianie i archiwizacja orzeczeń lekarskich.
     """)
 
-# 6. STOPKA / KONTAKT
+# 7. STOPKA / KONTAKT - Zmiana koloru stopki
 st.markdown("<br><hr><br>", unsafe_allow_html=True)
 st.markdown("""
     <div style="text-align: center; padding: 2rem; background-color: #0b213f; border-radius: 15px; color: white;">
         <h2>Gotowy na optymalizację?</h2>
         <p style="color: #a0aec0; margin-bottom: 2rem;">Zaprojektujmy system, który zdejmie z Twojego zespołu powtarzalną pracę.</p>
-        <a href="mailto:kontakt@vorteza.local" class="btn-primary" style="background-color: #16a085; box-shadow: none;">Porozmawiajmy o kodzie</a>
+        <a href="mailto:kontakt@vorteza.local" class="btn-primary" style="background-color: #bda886; box-shadow: none;">Porozmawiajmy o kodzie</a>
     </div>
 """, unsafe_allow_html=True)
