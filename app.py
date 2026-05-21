@@ -12,7 +12,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# 2. FUNKCJA ŁADUJĄCA TŁO Z PLIKU
+# 2. FUNKCJA ŁADUJĄCA TŁO Z KINOWYM FILTREM (OVERLAY)
 def get_base64_of_bin_file(bin_file):
     with open(bin_file, 'rb') as f:
         data = f.read()
@@ -21,10 +21,13 @@ def get_base64_of_bin_file(bin_file):
 def set_background(png_file):
     if os.path.exists(png_file):
         bin_str = get_base64_of_bin_file(png_file)
+        # Dodany linear-gradient maskujący kompresję tła i poprawiający kontrast
         page_bg_img = f'''
         <style>
         .stApp {{
-            background-image: url("data:image/jpeg;base64,{bin_str}");
+            background-image: 
+                linear-gradient(to right, rgba(255,255,255,0.05) 0%, rgba(11,33,63,0.5) 100%),
+                url("data:image/jpeg;base64,{bin_str}");
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -36,10 +39,9 @@ def set_background(png_file):
     else:
         st.warning("Prześlij plik 'background.jpg' do repozytorium, aby zobaczyć tło.")
 
-# Wywołanie tła
 set_background('background.jpg')
 
-# 3. ZAAWANSOWANY CSS (Glassmorphism & Złote Akcenty)
+# 3. ZAAWANSOWANY CSS (Glassmorphism & Naprawa Zakładek)
 st.markdown("""
     <style>
     /* Globalne czcionki */
@@ -47,19 +49,16 @@ st.markdown("""
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
     
-    /* Ukrycie domyślnego nagłówka Streamlit */
-    #MainMenu {visibility: hidden;}
-    header {visibility: hidden;}
-    footer {visibility: hidden;}
+    #MainMenu {visibility: hidden;} header {visibility: hidden;} footer {visibility: hidden;}
     
-    /* GLASSMORPHISM - Szklane panele dostosowujące się do tła */
+    /* GLASSMORPHISM - Szklane panele */
     .glass-panel {
-        background: rgba(255, 255, 255, 0.75); /* Półprzezroczysta biel */
-        backdrop-filter: blur(12px); /* Rozmycie tła pod panelem */
+        background: rgba(255, 255, 255, 0.75);
+        backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         border-radius: 15px;
         box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
-        border: 1px solid rgba(189, 168, 134, 0.5); /* Delikatna złota ramka */
+        border: 1px solid rgba(189, 168, 134, 0.5);
         transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
     .glass-panel:hover {
@@ -68,110 +67,59 @@ st.markdown("""
         border: 1px solid rgba(189, 168, 134, 0.8);
     }
     
-    /* Teksty wewnątrz szklanych paneli */
-    .text-dark {
-        color: #0b213f;
-    }
-    .text-accent {
-        color: #bda886; /* Złoty */
-    }
-    .text-muted {
-        color: #4a5568;
-    }
+    /* Teksty */
+    .text-dark { color: #0b213f; }
+    .text-accent { color: #bda886; }
+    .text-muted { color: #4a5568; }
     
     /* Sekcja Hero */
-    .hero-box {
-        padding: 5rem 3rem;
-        text-align: center;
-        margin: 2rem auto 4rem auto;
-        max-width: 900px;
-    }
-    .hero-title {
-        font-size: 3.5rem;
-        font-weight: 900;
-        letter-spacing: -1px;
-        margin-bottom: 1.5rem;
-        line-height: 1.2;
-    }
-    .hero-subtitle {
-        font-size: 1.2rem;
-        max-width: 750px;
-        margin: 0 auto 2.5rem auto;
-        line-height: 1.7;
-        font-weight: 500;
-    }
+    .hero-box { padding: 5rem 3rem; text-align: center; margin: 2rem auto 4rem auto; max-width: 900px; }
+    .hero-title { font-size: 3.5rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 1.5rem; line-height: 1.2; }
+    .hero-subtitle { font-size: 1.2rem; max-width: 750px; margin: 0 auto 2.5rem auto; line-height: 1.7; font-weight: 500; }
     
-    /* Przyciski - Złoty Kolor */
+    /* Przyciski */
     .btn-primary {
-        background-color: #bda886;
-        color: #0b213f !important;
-        padding: 14px 36px;
-        border-radius: 50px;
-        text-decoration: none;
-        font-weight: 800;
-        font-size: 1.1rem;
-        transition: all 0.3s ease;
-        display: inline-block;
-        border: 2px solid #bda886;
-        box-shadow: 0 4px 15px rgba(189, 168, 134, 0.3);
+        background-color: #bda886; color: #0b213f !important; padding: 14px 36px; border-radius: 50px;
+        text-decoration: none; font-weight: 800; font-size: 1.1rem; transition: all 0.3s ease;
+        display: inline-block; border: 2px solid #bda886; box-shadow: 0 4px 15px rgba(189, 168, 134, 0.3);
     }
-    .btn-primary:hover {
-        background-color: transparent;
-        color: #0b213f !important;
-        background: rgba(255, 255, 255, 0.9);
-        transform: translateY(-2px);
-    }
+    .btn-primary:hover { background-color: transparent; color: #ffffff !important; background: rgba(11, 33, 63, 0.9); transform: translateY(-2px); }
     
-    /* Nagłówki sekcji - Czysta biel z cieniem dla czytelności na tle */
-    .section-header {
-        text-align: center;
-        color: #ffffff;
-        font-size: 2.5rem;
-        font-weight: 900;
-        margin: 4rem 0 2.5rem 0;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        text-shadow: 0 4px 15px rgba(0,0,0,0.6);
-    }
+    /* Nagłówki sekcji */
+    .section-header { text-align: center; color: #ffffff; font-size: 2.5rem; font-weight: 900; margin: 4rem 0 2.5rem 0; text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 4px 15px rgba(0,0,0,0.6); }
     
-    /* Karty Modułów (Stack, Flow, Hub) */
-    .module-card {
-        padding: 2.5rem 2rem;
-        height: 100%;
-    }
-    .module-icon {
-        font-size: 2.5rem;
-        margin-bottom: 1rem;
-    }
-    .module-title {
-        font-weight: 800;
-        font-size: 1.4rem;
-        margin-bottom: 1rem;
-    }
+    /* Karty Modułów */
+    .module-card { padding: 2.5rem 2rem; height: 100%; }
+    .module-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+    .module-title { font-weight: 800; font-size: 1.4rem; margin-bottom: 1rem; }
     
-    /* Stylizacja Zakładek (Interaktywne) */
+    /* NAPRAWA: ZAKŁADKI I ICH ZAWARTOŚĆ W SZKLE */
     div[data-baseweb="tabs"] {
+        background: transparent;
+    }
+    div[data-baseweb="tab-list"] {
         background: rgba(255, 255, 255, 0.85);
         backdrop-filter: blur(12px);
-        border-radius: 15px;
-        padding: 2rem;
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+        border-radius: 15px 15px 0 0;
+        padding: 1rem 2rem 0 2rem;
         border: 1px solid rgba(189, 168, 134, 0.5);
-    }
-    .stTabs [data-baseweb="tab-list"] {
+        border-bottom: none;
         gap: 24px;
     }
+    div[data-baseweb="tab-panel"] {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(12px);
+        border-radius: 0 0 15px 15px;
+        padding: 2rem;
+        border: 1px solid rgba(189, 168, 134, 0.5);
+        border-top: none;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+    }
     .stTabs [data-baseweb="tab"] {
-        height: 50px;
-        white-space: pre-wrap;
-        background-color: transparent;
-        border-radius: 4px;
-        color: #0b213f;
-        font-weight: 800;
+        height: 50px; white-space: pre-wrap; background-color: transparent;
+        border-radius: 4px; color: #0b213f; font-weight: 800;
     }
-    .stTabs [data-baseweb="tab-highlight"] {
-        background-color: #bda886;
-    }
+    .stTabs [data-baseweb="tab-highlight"] { background-color: #bda886; }
     </style>
 """, unsafe_allow_html=True)
 
@@ -209,14 +157,14 @@ st.markdown("<h2 class='section-header'>Zrealizowane Ekosystemy</h2>", unsafe_al
 tab1, tab2, tab3 = st.tabs(["🚛 Logistyka & Transport", "⚖️ Usługi Prawne", "⚕️ Medycyna Pracy"])
 
 with tab1:
-    st.markdown("<h3 class='text-dark'>Automatyzacja procesów transportowych i spedycyjnych</h3>", unsafe_allow_html=True)
+    st.markdown("<h3 class='text-dark' style='margin-top:0;'>Automatyzacja procesów transportowych i spedycyjnych</h3>", unsafe_allow_html=True)
     st.markdown("<p class='text-muted'>Wielomodułowe rozwiązania usprawniające codzienną pracę dyspozytorów i spedytorów. Stworzone do obsługi wymagających operacji na rynkach międzynarodowych.</p>", unsafe_allow_html=True)
     
     col_a, col_b = st.columns([1, 1])
     with col_a:
         st.markdown("""
-        <div class='text-dark'>
-        <ul>
+        <div class='text-dark' style='margin-top: 1rem;'>
+        <ul style='line-height: 1.8;'>
             <li><b>SQM Dispatch:</b> Pełna kontrola nad flotą, zarządzanie kierowcami i śledzenie statusów.</li>
             <li><b>TABLICA:</b> Centralny system zarządzania danymi. Osobne, zautomatyzowane przepływy pracy dla <i>Przewoźników Stałych</i> oraz <i>Przewoźników Giełdowych</i>.</li>
             <li><b>Szybkie Zlecenie:</b> Błyskawiczne generowanie dokumentacji uwzględniające elastyczne i stałe cenniki.</li>
@@ -248,10 +196,10 @@ with tab1:
         st.plotly_chart(fig, use_container_width=True)
 
 with tab2:
-    st.markdown("<h3 class='text-dark'>Dedykowany system dla Kancelarii Prawnych</h3>", unsafe_allow_html=True)
+    st.markdown("<h3 class='text-dark' style='margin-top:0;'>Dedykowany system dla Kancelarii Prawnych</h3>", unsafe_allow_html=True)
     st.markdown("""
-    <div class='text-dark'>
-    <ul>
+    <div class='text-dark' style='margin-top: 1rem;'>
+    <ul style='line-height: 1.8;'>
         <li>Bezpieczne repozytorium akt i załączników.</li>
         <li>Automatyzacja generowania powtarzalnych dokumentów i pism procesowych.</li>
         <li>Cyfrowe zarządzanie kalendarzem spraw i śledzenie kluczowych terminów (deadlines).</li>
@@ -260,10 +208,10 @@ with tab2:
     """, unsafe_allow_html=True)
 
 with tab3:
-    st.markdown("<h3 class='text-dark'>Zarządzanie kartoteką w Medycynie Pracy</h3>", unsafe_allow_html=True)
+    st.markdown("<h3 class='text-dark' style='margin-top:0;'>Zarządzanie kartoteką w Medycynie Pracy</h3>", unsafe_allow_html=True)
     st.markdown("""
-    <div class='text-dark'>
-    <ul>
+    <div class='text-dark' style='margin-top: 1rem;'>
+    <ul style='line-height: 1.8;'>
         <li>Uporządkowana, cyfrowa baza danych pacjentów zachowująca najwyższe standardy prywatności.</li>
         <li>Automatyzacja procesu generowania skierowań na badania.</li>
         <li>Szybkie wystawianie i archiwizacja orzeczeń lekarskich.</li>
@@ -275,7 +223,7 @@ with tab3:
 st.markdown("<br><br>", unsafe_allow_html=True)
 html_footer = """
     <div class="glass-panel text-dark" style="text-align: center; padding: 2.5rem; margin: 0 auto; max-width: 700px;">
-        <h2 style="font-weight: 900; margin-bottom: 0.5rem;">Gotowy na optymalizację?</h2>
+        <h2 style="font-weight: 900; margin-bottom: 0.5rem; color: #0b213f;">Gotowy na optymalizację?</h2>
         <p class="text-muted" style="margin-bottom: 2rem; font-size: 1.1rem;">Zaprojektujmy system, który zdejmie z Twojego zespołu powtarzalną pracę.</p>
         <a href="mailto:kontakt@vorteza.local" class="btn-primary">Porozmawiajmy o kodzie</a>
         
