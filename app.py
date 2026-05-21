@@ -244,59 +244,52 @@ with st.container():
     st.markdown('</div>', unsafe_allow_html=True)
 
 # ==============================================================================
-# 8. PODSTAWY NAUKOWE (SCIENTIFIC SECTION)
+# 8. BIZNESOWE ROI (KALKULATOR WARTOSCI)
 # ==============================================================================
-st.markdown("<h2 class='v-section-header'>Logika Algorytmiczna</h2>", unsafe_allow_html=True)
+st.markdown("<h2 class='v-section-header'>Kalkulator Wartości Biznesowej</h2>", unsafe_allow_html=True)
 
 with st.container():
     st.markdown('<div class="v-glass-panel" style="padding: 3rem;">', unsafe_allow_html=True)
     
-    m_c1, m_c2 = st.columns([1, 1])
+    roi_c1, roi_c2 = st.columns([1.2, 1])
     
-    with m_c1:
-        st.markdown("<h3 style='color: white;'>Model Optymalizacji Marży</h3>", unsafe_allow_html=True)
-        st.write("W Vorteza Flow stosujemy dynamiczne ważenie kosztów zmiennych w oparciu o dostępność taboru w czasie rzeczywistym.")
-        st.markdown("""
-        <div class="math-box">
-        <math display="block">
-          <mi>C</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo>
-          <msub><mi>B</mi><mi>rate</mi></msub>
-          <mo>&sdot;</mo>
-          <mfenced>
-            <mrow><mn>1</mn><mo>+</mo><mi>&Phi;</mi><mo>(</mo><mi>u</mi><mo>)</mo></mrow>
-          </mfenced>
-          <mo>+</mo>
-          <mfrac>
-            <mrow><mi>&delta;</mi><mo>&sdot;</mo><mi>D</mi></mrow>
-            <msub><mi>S</mi><mi>factor</mi></msub>
-          </mfrac>
-        </math>
-        </div>
-        <p style="font-size: 0.8rem; color: #94a3b8;">Gdzie: C(x) - koszt całkowity, B - stawka bazowa, Φ(u) - funkcja pilności, δ - ryzyko operacyjne, S - współczynnik stabilności przewoźnika.</p>
+    with roi_c1:
+        st.markdown("<h3 style='color: white; margin-bottom: 1rem;'>Ile kosztuje Cię praca ręczna?</h3>", unsafe_allow_html=True)
+        st.markdown("<p style='color: #cbd5e1; margin-bottom: 2rem; font-size: 1.1rem;'>Sprawdź, ile czasu operacyjnego możesz odzyskać w skali miesiąca, zamieniając manualne przepisywanie danych na automatyzację Vorteza Flow.</p>", unsafe_allow_html=True)
+        
+        # Interaktywne suwaki Streamlit
+        tasks_per_day = st.slider("Liczba powtarzalnych operacji dziennie (np. wystawienie zlecenia, wygenerowanie pisma):", min_value=10, max_value=300, value=80, step=10)
+        time_per_task = st.slider("Średni czas ręcznej obsługi jednej operacji (w minutach):", min_value=2, max_value=45, value=12, step=1)
+        
+    with roi_c2:
+        # Logika biznesowa kalkulatora
+        manual_time_per_day = tasks_per_day * time_per_task
+        # Zakładamy, że Vorteza Flow sprowadza proces z np. 12 minut do 1.5 minuty
+        vorteza_time_per_task = 1.5 
+        vorteza_time_per_day = tasks_per_day * vorteza_time_per_task
+        
+        saved_minutes_per_day = manual_time_per_day - vorteza_time_per_day
+        # Przyjmujemy średnio 21 dni roboczych w miesiącu
+        saved_hours_per_month = (saved_minutes_per_day * 21) / 60 
+        
+        # Obliczenie oszczędności w etatach (FTE - Full Time Equivalent, ok. 160h/mies.)
+        saved_fte = saved_hours_per_month / 160
+        
+        st.markdown(f"""
+            <div style="background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 20px; padding: 2.5rem; text-align: center; height: 100%; display: flex; flex-direction: column; justify-content: center; box-shadow: 0 10px 30px rgba(16, 185, 129, 0.1);">
+                <div style="color: #10b981; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1rem; font-weight: 800;">Zaoszczędzony czas zespołu</div>
+                <div style="color: #ffffff; font-size: 4.5rem; font-weight: 900; line-height: 1; text-shadow: 0 5px 15px rgba(0,0,0,0.3);">+{int(saved_hours_per_month)} <span style="font-size: 1.5rem; color: #10b981;">godz. / mies.</span></div>
+                
+                <hr style="border-top: 1px solid rgba(16, 185, 129, 0.2); margin: 1.5rem 0;">
+                
+                <div style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6;">
+                    To odzyskana przepustowość równa <b>{saved_fte:.1f} pełnym etatom (FTE)</b>.<br>
+                    Czas, który Twoi eksperci mogą przeznaczyć na gaszenie pożarów, relacje z klientami i skalowanie biznesu.
+                </div>
+            </div>
         """, unsafe_allow_html=True)
-
-    with m_c2:
-        st.markdown("<h3 style='color: white;'>Współczynnik Automatyzacji</h3>", unsafe_allow_html=True)
-        st.write("Mierzymy sukces redukcją pracy ręcznej w powtarzalnych procesach B2B.")
-        st.markdown("""
-        <div class="math-box">
-        <math display="block">
-          <msub><mi>A</mi><mi>index</mi></msub><mo>=</mo>
-          <mn>1</mn><mo>-</mo>
-          <mfenced>
-            <mfrac>
-              <msub><mi>T</mi><mi>auto</mi></msub>
-              <msub><mi>T</mi><mi>manual</mi></msub>
-            </mfrac>
-          </mfenced>
-          <mo>&ge;</mo><mn>0.85</mn>
-        </math>
-        </div>
-        <p style="font-size: 0.8rem; color: #94a3b8;">Nasze wdrożenia utrzymują współczynnik automatyzacji na poziomie powyżej 85% dla branży TSL i Legal-Tech.</p>
-        """, unsafe_allow_html=True)
-
+        
     st.markdown('</div>', unsafe_allow_html=True)
-
 # ==============================================================================
 # 9. BRANŻOWE CASE STUDIES (ZAKŁADKI)
 # ==============================================================================
